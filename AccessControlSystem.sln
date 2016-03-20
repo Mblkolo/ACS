@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControlSystem", "AccessControlSystem\AccessControlSystem.csproj", "{E39D654B-A9A0-4649-BF12-D834FE510A44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControlSystem", "AccessControlSystem\AccessControlSystem.csproj", "{E3DA3B15-4DC3-4AAF-8DC1-5045901CB67A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControlSystem.Tests", "AccessControlSystem.Tests\AccessControlSystem.Tests.csproj", "{4AEF2CAD-F33A-405F-9CAB-57ACE40FC739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E39D654B-A9A0-4649-BF12-D834FE510A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E39D654B-A9A0-4649-BF12-D834FE510A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E39D654B-A9A0-4649-BF12-D834FE510A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E39D654B-A9A0-4649-BF12-D834FE510A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3DA3B15-4DC3-4AAF-8DC1-5045901CB67A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3DA3B15-4DC3-4AAF-8DC1-5045901CB67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3DA3B15-4DC3-4AAF-8DC1-5045901CB67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3DA3B15-4DC3-4AAF-8DC1-5045901CB67A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEF2CAD-F33A-405F-9CAB-57ACE40FC739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEF2CAD-F33A-405F-9CAB-57ACE40FC739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEF2CAD-F33A-405F-9CAB-57ACE40FC739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEF2CAD-F33A-405F-9CAB-57ACE40FC739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
