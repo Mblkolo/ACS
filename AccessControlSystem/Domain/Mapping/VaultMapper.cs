@@ -18,7 +18,14 @@ namespace AccessControlSystem.Domain.Mapping
             });
 
             Property(x => x.Name, m => m.NotNullable(true));
-            ManyToOne(x => x.User, m => m.Column("UserId"));
+            ManyToOne(x => x.Admin, m => m.Column("AdminUserId"));
+
+            this.Bag(x => x.Users, m =>
+            {
+                m.Lazy(CollectionLazy.Lazy);
+                m.Inverse(false);
+                m.Key(k => k.Column("VaultId"));
+            }, map => map.OneToMany());
         }
     }
 }

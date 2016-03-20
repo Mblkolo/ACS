@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AccessControlSystem.Models.VaultAdminIndexViewModel>
+
+@{
+    ViewBag.Title = "Хранилища";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<ul class="list-group half">
+    @foreach (var item in Model)
+    { 
+        <li class="list-group-item">@Html.ActionLink(item.Name, "Details", new { id = item.Id })</li>
+    }
+</ul>

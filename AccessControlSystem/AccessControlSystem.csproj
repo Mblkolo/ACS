@@ -162,7 +162,10 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VaultController.cs" />
+    <Compile Include="Controllers\VaultAdminController.cs" />
+    <Compile Include="Domain\Mapping\VaultUserMapper.cs" />
     <Compile Include="Domain\Mapping\VaultMapper.cs" />
+    <Compile Include="Domain\VaultUsers.cs" />
     <Compile Include="Domain\Vault.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,6 +174,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\VaultAdminViewModel.cs" />
     <Compile Include="Models\VaultViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -241,6 +245,7 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\VaultAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

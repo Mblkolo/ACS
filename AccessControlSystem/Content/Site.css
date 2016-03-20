@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.half
+{
+    width: 570px;
+}

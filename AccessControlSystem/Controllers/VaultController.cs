@@ -25,7 +25,7 @@ namespace AccessControlSystem.Controllers
         public ActionResult Index()
         {
             var allVault = DbSession.Query<Vault>().Select(x => new VaultViewModel {
-                AdminId = x.User.Id,
+                AdminId = x.Admin.Id,
                 Id = x.Id,
                 Name = x.Name
             }).ToArray();
