@@ -1,0 +1,29 @@
+﻿@model IEnumerable<AccessControlSystem.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Пользователи";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@Html.ActionLink("Редактировать", "Edit", new {id = item.Id})</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default" })
