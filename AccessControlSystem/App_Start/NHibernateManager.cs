@@ -1,7 +1,10 @@
-﻿using AccessControlSystem.Models;
+﻿using AccessControlSystem.Domain;
+using AccessControlSystem.Models;
 using NHibernate;
 using NHibernate.AspNet.Identity.Helpers;
 using NHibernate.Cfg;
+using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
@@ -37,10 +40,19 @@ namespace AccessControlSystem
             var configuration = new Configuration();
             configuration.Configure();
             configuration.AddDeserializedMapping(MappingHelper.GetIdentityMappings(myEntities), null);
+            configuration.AddMapping(getDomainMapping());
 
             new SchemaExport(configuration).Execute(true, true, false);
 
             return configuration.BuildSessionFactory();
+        }
+
+        private static HbmMapping getDomainMapping()
+        {
+            var mapper = new ModelMapper();
+            mapper.AddMappings(typeof(NHibernateManager).Assembly.GetExportedTypes());
+
+            return mapper.CompileMappingForAllExplicitlyAddedEntities();
         }
     }
 }

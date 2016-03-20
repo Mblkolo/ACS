@@ -42,7 +42,7 @@ namespace AccessControlSystem.Controllers
             }
         }
 
-        public ISession Session
+        public ISession DbSession
         {
             get { return _session ?? (_session = HttpContext.GetOwinContext().Get<ISession>()); }
         }
@@ -158,7 +158,7 @@ namespace AccessControlSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                using(var transaction = Session.Transaction)
+                using(var transaction = DbSession.BeginTransaction())
                 {
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
