@@ -18,6 +18,9 @@ namespace AccessControlSystem.Domain.Mapping
             });
 
             Property(x => x.Name, m => m.NotNullable(true));
+            Property(x => x.OpeningTime);
+            Property(x => x.ClosingTime);
+
             ManyToOne(x => x.Admin, m => m.Column("AdminUserId"));
 
             this.Bag(x => x.Users, m =>

@@ -43,11 +43,7 @@ namespace AccessControlSystem.Controllers
 
         public ActionResult Details(int id)
         {
-            string currentUserId = User.Identity.GetUserId();
-            var vault = DbSession.Query<Vault>()
-                .Where(x => x.Admin.Id == currentUserId && x.Id == id)
-                .SingleOrDefault();
-
+            var vault = getVault(id);
             if (vault == null)
                 return HttpNotFound();
 
@@ -65,11 +61,7 @@ namespace AccessControlSystem.Controllers
 
         public ActionResult UsersAccess(int id)
         {
-            string currentUserId = User.Identity.GetUserId();
-            var vault = DbSession.Query<Vault>()
-                .Where(x => x.Admin.Id == currentUserId && x.Id == id)
-                .SingleOrDefault();
-
+            var vault = getVault(id);
             if (vault == null)
                 return HttpNotFound();
 
@@ -103,11 +95,7 @@ namespace AccessControlSystem.Controllers
         [HttpPost]
         public ActionResult UsersAccess(int id, string[] userId)
         {
-            string currentUserId = User.Identity.GetUserId();
-            var vault = DbSession.Query<Vault>()
-                .Where(x => x.Admin.Id == currentUserId && x.Id == id)
-                .SingleOrDefault();
-
+            var vault = getVault(id);
             if (vault == null)
                 return HttpNotFound();
 
@@ -130,16 +118,51 @@ namespace AccessControlSystem.Controllers
             return Redirect(Url.Action("Details", new {id = id}));
         }
 
-        public ActionResult OpenHours(string id)
+        public ActionResult OpenHours(int id)
         {
-            return View();
+            var vault = getVault(id);
+            if (vault == null)
+                return HttpNotFound();
+
+            var model = new VaultAdminOpenHoursViewModel
+            {
+                Id = vault.Id,
+                Name = vault.Name,
+                OpeningTime = vault.OpeningTime,
+                ClosingTime = vault.ClosingTime
+            };
+
+            return View(model);
         }
 
 
         [HttpPost]
-        public ActionResult ChangeOpenHours(string id, DateTime openTime, DateTime closeTime)
+        public ActionResult OpenHours(int id, int openingTime, int  closingTime)
         {
-            return View();
+            var vault = getVault(id);
+            if (vault == null)
+                return HttpNotFound();
+
+            using (var transaction = DbSession.BeginTransaction())
+            {
+                vault.OpeningTime = openingTime;
+                vault.ClosingTime = closingTime;
+
+                DbSession.Update(vault);
+
+                transaction.Commit();
+            }
+
+            return Redirect(Url.Action("Details", new { id = id }));
+        }
+
+        private Vault getVault(int id)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            return DbSession.Query<Vault>()
+                .Where(x => x.Admin.Id == currentUserId && x.Id == id)
+                .SingleOrDefault();
+
         }
 
     }

@@ -43,6 +43,21 @@ namespace AccessControlSystem.Models
         public UserSelectViewModel[] Users { get; set; }
     }
 
+    public class VaultAdminOpenHoursViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Название")]
+        public string Name { get; set; }
+
+        [Display(Name = "Начало работы")]
+        public int OpeningTime { get; set; }
+
+        [Display(Name = "Завершение работы")]
+        public int ClosingTime { get; set; }
+    }
+
+
     public class UserSelectViewModel
     {
         public string Id { get; set; }

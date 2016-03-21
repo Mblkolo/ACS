@@ -1,0 +1,36 @@
+﻿@model AccessControlSystem.Models.VaultAdminOpenHoursViewModel
+
+@{
+    ViewBag.Title = "Часы работы";
+}
+
+<ul class="breadcrumb">
+    <li><a href="#">Домой</a> </li>
+    <li><a href="#">Библиотека</a> </li>
+    <li class="active">Данные</li>
+</ul>
+
+<h1>@ViewBag.Title</h1>
+@using (Html.BeginForm("OpenHours", "VaultAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.HiddenFor(x => x.Id);
+    <div class="form-group">
+        @Html.LabelFor(m => m.OpeningTime, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OpeningTime, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ClosingTime, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ClosingTime, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Сохранить" />
+        </div>
+    </div>
+}
