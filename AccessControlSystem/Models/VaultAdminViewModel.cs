@@ -32,4 +32,27 @@ namespace AccessControlSystem.Models
 
         public string[] AccessLog { get; set; }
     }
+
+    public class VaultAdminUsersAccessViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Название")]
+        public string Name { get; set; }
+
+        public UserSelectViewModel[] Users { get; set; }
+    }
+
+    public class UserSelectViewModel
+    {
+        public string Id { get; set; }
+
+        [Display(Name = "Имя")]
+        public string Name { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        public bool IsSelected {get; set; }
+    }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using AccessControlSystem.Domain;
 using AccessControlSystem.Models;
+using NHibernate.AspNet.Identity;
 
 namespace AccessControlSystem.Controllers
 {
@@ -39,17 +40,15 @@ namespace AccessControlSystem.Controllers
 
             return View(vaults);
         }
-        
+
         public ActionResult Details(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-
-            //Все доступные пользователю хранилища
             var vault = DbSession.Query<Vault>()
                 .Where(x => x.Admin.Id == currentUserId && x.Id == id)
                 .SingleOrDefault();
 
-            if(vault == null)
+            if (vault == null)
                 return HttpNotFound();
 
             var vaultDetailVM = new VaultAdminDetaisViewModel
@@ -64,14 +63,40 @@ namespace AccessControlSystem.Controllers
             return View(vaultDetailVM);
         }
 
-        public ActionResult UsersAccess(string id)
+        public ActionResult UsersAccess(int id)
         {
+            string currentUserId = User.Identity.GetUserId();
+            var vault = DbSession.Query<Vault>()
+                .Where(x => x.Admin.Id == currentUserId && x.Id == id)
+                .SingleOrDefault();
 
-            return View();
+            if (vault == null)
+                return HttpNotFound();
+
+
+            var trustedUsers = vault.Users.ToDictionary(x => x.User.Id);
+            var users = DbSession.Query<IdentityUser>()
+                .Select(x => new UserSelectViewModel
+                {
+                    Email = x.Email,
+                    Id = x.Id,
+                    Name = x.UserName,
+                    IsSelected = trustedUsers.ContainsKey(x.Id)
+                })
+                .ToArray();
+
+            var model = new VaultAdminUsersAccessViewModel
+            {
+                Id = vault.Id,
+                Name = vault.Name,
+                Users = users
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult ToogleUserAccess(string id, string userId)
+        public ActionResult UserAccess(string id, string[] userId)
         {
             //Даёт и забирает права пользователя на посещение хранилища
             return View();
@@ -82,7 +107,7 @@ namespace AccessControlSystem.Controllers
             return View();
         }
 
-        
+
         [HttpPost]
         public ActionResult ChangeOpenHours(string id, DateTime openTime, DateTime closeTime)
         {
