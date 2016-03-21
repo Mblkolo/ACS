@@ -81,9 +81,14 @@ namespace AccessControlSystem.Controllers
                     Email = x.Email,
                     Id = x.Id,
                     Name = x.UserName,
-                    IsSelected = trustedUsers.ContainsKey(x.Id)
                 })
                 .ToArray();
+
+            foreach (var user in users)
+            {
+                user.IsSelected = trustedUsers.ContainsKey(user.Id);
+            }
+
 
             var model = new VaultAdminUsersAccessViewModel
             {
@@ -96,10 +101,33 @@ namespace AccessControlSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserAccess(string id, string[] userId)
+        public ActionResult UsersAccess(int id, string[] userId)
         {
-            //Даёт и забирает права пользователя на посещение хранилища
-            return View();
+            string currentUserId = User.Identity.GetUserId();
+            var vault = DbSession.Query<Vault>()
+                .Where(x => x.Admin.Id == currentUserId && x.Id == id)
+                .SingleOrDefault();
+
+            if (vault == null)
+                return HttpNotFound();
+
+            using(var transaction = DbSession.BeginTransaction())
+            {
+                var userForLoad = userId.Where(x => vault.Users.All(y => y.User.Id != x)).ToArray();
+                var newUsers = DbSession.Query<IdentityUser>().Where(x => userForLoad.Contains(x.Id)).ToArray();
+                var forCreate = newUsers.Select(x => new VaultUsers { User = x, Vault = vault }).ToArray();
+                var forRemove = vault.Users.Where(x => !userId.Contains(x.User.Id)).ToArray();
+
+                foreach (var newVaultUser in forCreate)
+                    DbSession.Save(newVaultUser);
+
+                foreach (var notActualVaultUser in forRemove)
+                    DbSession.Delete(notActualVaultUser);
+
+                transaction.Commit();
+            }
+
+            return Redirect(Url.Action("Details", new {id = id}));
         }
 
         public ActionResult OpenHours(string id)

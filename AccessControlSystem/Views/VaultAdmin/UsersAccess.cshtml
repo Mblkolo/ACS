@@ -13,7 +13,7 @@
 </ul>
 
 <h1>@ViewBag.Title</h1>
-@using (Html.BeginForm("UserAccess", "AdminVault", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("UsersAccess", "VaultAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x => x.Id)
     
@@ -32,7 +32,7 @@
                     <td>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="userId" value="@item.Id">
+                                <input type="checkbox" name="userId" value="@item.Id" @(item.IsSelected ? "checked" : null  ) >
                             </label>
                         </div>
                     </td>
