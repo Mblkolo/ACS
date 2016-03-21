@@ -1,0 +1,48 @@
+﻿@model AccessControlSystem.Models.VaultAdminDetaisViewModel
+
+@{
+    ViewBag.Title = "Сводка хранилища " + Model.Name;
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="">
+    <div class="col-md-2">Часы работы</div>
+    <div class="col-md-2">@Model.OpeningTime — @Model.CloseTime</div>
+</div>
+@Html.ActionLink("Редактировать", "OpenHours", new { id = Model.Id }, new { @class = "btn btn-primary" })
+
+
+<hr>
+<h2>Доверенные пользователи</h2>
+<ul class="list-group half">
+    @foreach (var item in Model.Users)
+    {
+        <li class="list-group-item"> @item </li>
+    }
+</ul>
+@Html.ActionLink("Редактировать", "UsersAccess", new { id = Model.Id }, new { @class = "btn btn-primary" })
+
+
+<hr>
+<h2>Действия</h2>
+
+    <table class="table table-striped half">
+        <thead>
+            <tr>
+                <th>Время</th>
+                <th>Успех</th>
+                <th>Клиент</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AccessLog)
+            {
+                <tr>
+                    <td>@item.AccessTime.ToString("u")</td>
+                    <td>@(item.IsSuccess ? "Да" : "Нет")</td>
+                    <td>@item.UserInfo</td>
+                </tr>
+            }
+        </tbody>
+    </table>

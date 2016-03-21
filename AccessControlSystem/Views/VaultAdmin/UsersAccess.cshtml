@@ -1,0 +1,42 @@
+﻿@model AccessControlSystem.Models.VaultAdminUsersAccessViewModel
+
+@{
+    ViewBag.Title = "Доверенные пользователи";
+}
+
+<h1>@ViewBag.Title</h1>
+@using (Html.BeginForm("UsersAccess", "VaultAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(x => x.Id)
+    
+    <table class="table table-striped half">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Пользователь</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="userId" value="@item.Id" @(item.IsSelected ? "checked" : null  ) >
+                            </label>
+                        </div>
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Сохранить" />
+        </div>
+    </div>
+}

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<AccessControlSystem.Models.VaultViewModel>
+
+@{
+    ViewBag.Title = "Хранилища";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-striped half">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Ид пользователя</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.AdminId</td>
+                <td>@Html.ActionLink("Редактировать", "Edit", new {id = item.Id})</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default" })
