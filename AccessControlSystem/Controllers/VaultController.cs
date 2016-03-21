@@ -53,7 +53,8 @@ namespace AccessControlSystem.Controllers
                 {
                     using (var transaction = DbSession.BeginTransaction())
                     {
-                        var vault = new Vault { Name = model.Name };
+                        var admin = DbSession.Get<ApplicationUser>(model.AdminId);
+                        var vault = new Vault { Name = model.Name, Admin = admin };
                         DbSession.Save(vault);
 
                         transaction.Commit();

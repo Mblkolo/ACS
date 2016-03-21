@@ -47,15 +47,21 @@ namespace AccessControlSystem.Controllers
             //Все доступные пользователю хранилища
             var vault = DbSession.Query<Vault>()
                 .Where(x => x.Admin.Id == currentUserId && x.Id == id)
-                .Select(x => new VaultAdminDetaisViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Users = x.Users.Select(y => y.User.UserName).ToArray()
-                })
                 .SingleOrDefault();
 
-            return View(vault);
+            if(vault == null)
+                return HttpNotFound();
+
+            var vaultDetailVM = new VaultAdminDetaisViewModel
+                {
+                    Id = vault.Id,
+                    Name = vault.Name,
+                    CloseTime = vault.ClosingTime,
+                    OpeningTime = vault.OpeningTime,
+                    Users = vault.Users.Select(y => y.User.UserName).ToArray()
+                };
+
+            return View(vaultDetailVM);
         }
 
         public ActionResult UsersAccess(string id)

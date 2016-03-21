@@ -246,6 +246,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\VaultAdmin\Index.cshtml" />
+    <Content Include="Views\VaultAdmin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

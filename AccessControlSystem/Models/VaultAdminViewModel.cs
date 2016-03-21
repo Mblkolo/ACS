@@ -25,6 +25,9 @@ namespace AccessControlSystem.Models
         [Display(Name = "Название")]
         public string Name { get; set; }
 
+        public int? OpeningTime { get; set; }
+        public int? CloseTime { get; set; }
+
         public string[] Users { get; set; }
 
         public string[] AccessLog { get; set; }

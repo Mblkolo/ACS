@@ -1,6 +1,7 @@
 ﻿using AccessControlSystem.Domain;
 using AccessControlSystem.Models;
 using NHibernate;
+using NHibernate.AspNet.Identity;
 using NHibernate.AspNet.Identity.Helpers;
 using NHibernate.Cfg;
 using NHibernate.Cfg.MappingSchema;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
 
 namespace AccessControlSystem
 {
@@ -44,7 +46,9 @@ namespace AccessControlSystem
 
             new SchemaExport(configuration).Execute(true, true, false);
 
-            return configuration.BuildSessionFactory();
+            var sessionFactory = configuration.BuildSessionFactory();
+            Seed(sessionFactory);
+            return sessionFactory;
         }
 
         private static HbmMapping getDomainMapping()
@@ -53,6 +57,44 @@ namespace AccessControlSystem
             mapper.AddMappings(typeof(NHibernateManager).Assembly.GetExportedTypes());
 
             return mapper.CompileMappingForAllExplicitlyAddedEntities();
+        }
+
+        private static void Seed(ISessionFactory sessionFactory)
+        {
+            try
+            {
+                using (var session = sessionFactory.OpenSession())
+                {
+                    using(var tr = session.BeginTransaction())
+                    {
+                        var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(session));
+                        var adminUser = new ApplicationUser{Email = "admin@example.com", UserName = "admin", EmailConfirmed = true};
+                        var vaultAdminUser = new ApplicationUser{Email = "vault_admin@example.com", UserName = "vault_admin", EmailConfirmed = true};
+                        var simpleUser = new ApplicationUser{Email = "user@example.com", UserName = "user", EmailConfirmed = true};
+
+                        var res = manager.Create(adminUser, "Ololo1,");
+                        if (!res.Succeeded)
+                            throw new Exception(String.Join(System.Environment.NewLine, res.Errors));
+
+                        res = manager.Create(vaultAdminUser, "Ololo1,");
+                        if (!res.Succeeded)
+                            throw new Exception(String.Join(System.Environment.NewLine, res.Errors));
+
+                        res = manager.Create(simpleUser, "Ololo1,");
+                        if (!res.Succeeded)
+                            throw new Exception(String.Join(System.Environment.NewLine, res.Errors));
+
+                        var vault = new Vault { Admin = vaultAdminUser, Name = "Важные данные" };
+                        session.SaveOrUpdate(vault);
+
+                        tr.Commit();
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

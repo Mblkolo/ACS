@@ -1,0 +1,70 @@
+﻿@model AccessControlSystem.Models.VaultAdminDetaisViewModel
+
+@{
+    ViewBag.Title = "Сводка хранилища " + Model.Name;
+}
+
+<ul class="breadcrumb">
+    <li><a href="#">Домой</a> </li>
+    <li><a href="#">Библиотека</a> </li>
+    <li class="active">Данные</li>
+</ul>
+
+<h1>@ViewBag.Title</h1>
+
+<div class="">
+    <div class="col-md-2">Часы работы</div>
+    <div class="col-md-2">@Model.OpeningTime — @Model.CloseTime</div>
+</div>
+@Html.ActionLink("Редактировать", "OpenHours", new { id = Model.Id }, new { @class = "btn btn-primary" })
+
+
+<hr>
+<h2>Доверенные пользователи</h2>
+<ul class="list-group half">
+    @foreach (var item in Model.Users)
+    {
+        <li class="list-group-item"> @item </li>
+    }
+</ul>
+@Html.ActionLink("Редактировать", "UsersAccess", new { id = Model.Id }, new { @class = "btn btn-primary" })
+
+
+<hr>
+<h2>Действия</h2>
+    <table class="table table-striped half">
+        <thead>
+            <tr>
+                <th>Время</th>
+                <th>Юзер</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>23.00</td>
+                <td>Вася Пупкин</td>
+                <td>пытался зайти</td>
+            </tr>
+            <tr>
+                <td>23.00</td>
+                <td>Вася Пупкин</td>
+                <td>пытался зайти</td>
+            </tr>
+            <tr>
+                <td>23.00</td>
+                <td>Вася Пупкин</td>
+                <td>пытался зайти</td>
+            </tr>
+            <tr>
+                <td>23.00</td>
+                <td>Вася Пупкин</td>
+                <td>пытался зайти</td>
+            </tr>
+            <tr>
+                <td>23.00</td>
+                <td>Вася Пупкин</td>
+                <td>пытался зайти</td>
+            </tr>
+        </tbody>
+    </table>

@@ -9,8 +9,8 @@ namespace AccessControlSystem.Domain
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual IdentityUser Admin { get; set; }
-        public virtual List<VaultUsers> Users { get; set; }
-        public virtual DateTime OpeningTime { get; set; }
-        public virtual DateTime ClosingTime { get; set; }
+        public virtual ICollection<VaultUsers> Users { get; set; }
+        public virtual int? OpeningTime { get; set; }
+        public virtual int? ClosingTime { get; set; }
     }
 }
