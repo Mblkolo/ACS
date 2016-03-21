@@ -4,12 +4,6 @@
     ViewBag.Title = "Часы работы";
 }
 
-<ul class="breadcrumb">
-    <li><a href="#">Домой</a> </li>
-    <li><a href="#">Библиотека</a> </li>
-    <li class="active">Данные</li>
-</ul>
-
 <h1>@ViewBag.Title</h1>
 @using (Html.BeginForm("OpenHours", "VaultAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
