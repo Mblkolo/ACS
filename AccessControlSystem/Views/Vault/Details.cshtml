@@ -1,0 +1,17 @@
+﻿@model AccessControlSystem.Models.VaultViewModel
+
+@{
+    ViewBag.Title = "Поздравляем! Вы проникли в хранилище!";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@Html.ActionLink("Верунуться на главную", "Index", "Home")
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

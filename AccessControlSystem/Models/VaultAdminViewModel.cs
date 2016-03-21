@@ -30,7 +30,7 @@ namespace AccessControlSystem.Models
 
         public string[] Users { get; set; }
 
-        public string[] AccessLog { get; set; }
+        public VaultAccessViewModel[] AccessLog { get; set; }
     }
 
     public class VaultAdminUsersAccessViewModel
@@ -69,5 +69,14 @@ namespace AccessControlSystem.Models
         public string Email { get; set; }
 
         public bool IsSelected {get; set; }
+    }
+
+    public class VaultAccessViewModel
+    {
+        public virtual int Id { get; set; }
+        public virtual string VaultName { get; set; }
+        public virtual DateTime AccessTime { get; set; }
+        public virtual bool IsSuccess { get; set; }
+        public virtual string UserInfo { get; set; }
     }
 }

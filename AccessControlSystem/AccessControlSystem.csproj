@@ -163,8 +163,10 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VaultController.cs" />
     <Compile Include="Controllers\VaultAdminController.cs" />
+    <Compile Include="Domain\Mapping\VaultAccessMapper.cs" />
     <Compile Include="Domain\Mapping\VaultUserMapper.cs" />
     <Compile Include="Domain\Mapping\VaultMapper.cs" />
+    <Compile Include="Domain\VaultAccess.cs" />
     <Compile Include="Domain\VaultUsers.cs" />
     <Compile Include="Domain\Vault.cs" />
     <Compile Include="Global.asax.cs">
@@ -249,6 +251,7 @@
     <Content Include="Views\VaultAdmin\Details.cshtml" />
     <Content Include="Views\VaultAdmin\UsersAccess.cshtml" />
     <Content Include="Views\VaultAdmin\OpenHours.cshtml" />
+    <Content Include="Views\Vault\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

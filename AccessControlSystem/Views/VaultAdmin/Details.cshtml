@@ -32,39 +32,23 @@
 
 <hr>
 <h2>Действия</h2>
+
     <table class="table table-striped half">
         <thead>
             <tr>
                 <th>Время</th>
-                <th>Юзер</th>
-                <th>Действие</th>
+                <th>Успех</th>
+                <th>Клиент</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>23.00</td>
-                <td>Вася Пупкин</td>
-                <td>пытался зайти</td>
-            </tr>
-            <tr>
-                <td>23.00</td>
-                <td>Вася Пупкин</td>
-                <td>пытался зайти</td>
-            </tr>
-            <tr>
-                <td>23.00</td>
-                <td>Вася Пупкин</td>
-                <td>пытался зайти</td>
-            </tr>
-            <tr>
-                <td>23.00</td>
-                <td>Вася Пупкин</td>
-                <td>пытался зайти</td>
-            </tr>
-            <tr>
-                <td>23.00</td>
-                <td>Вася Пупкин</td>
-                <td>пытался зайти</td>
-            </tr>
+            @foreach (var item in Model.AccessLog)
+            {
+                <tr>
+                    <td>@item.AccessTime.ToString("u")</td>
+                    <td>@(item.IsSuccess ? "Да" : "Нет")</td>
+                    <td>@item.UserInfo</td>
+                </tr>
+            }
         </tbody>
     </table>

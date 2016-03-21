@@ -47,16 +47,29 @@ namespace AccessControlSystem.Controllers
             if (vault == null)
                 return HttpNotFound();
 
-            var vaultDetailVM = new VaultAdminDetaisViewModel
+            var log = DbSession.Query<VaultAccess>()
+                .Where(x => x.Vault == vault)
+                .Select(x => new VaultAccessViewModel
+                {
+                    Id = x.Id,
+                    IsSuccess = x.IsSuccess,
+                    UserInfo = x.UserInfo,
+                    AccessTime = x.AccessTime
+                })
+                .OrderByDescending(x => x.AccessTime)
+                .ToArray();
+
+            var model = new VaultAdminDetaisViewModel
                 {
                     Id = vault.Id,
                     Name = vault.Name,
                     CloseTime = vault.ClosingTime,
                     OpeningTime = vault.OpeningTime,
-                    Users = vault.Users.Select(y => y.User.UserName).ToArray()
+                    Users = vault.Users.Select(y => y.User.UserName).ToArray(),
+                    AccessLog = log
                 };
 
-            return View(vaultDetailVM);
+            return View(model);
         }
 
         public ActionResult UsersAccess(int id)
