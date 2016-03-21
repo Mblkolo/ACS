@@ -1,4 +1,22 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model AccessControlSystem.Models.VaultViewModel[]
+
+@{
+    ViewBag.Title = "Доступные хранилища";
+}
+
+<h1>@ViewBag.Title</h1>
+
+@if(Model.Length > 0)
+{ 
+    <ul class="list-group half">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item"> @Html.ActionLink(item.Name, "Details", "Home", new { id = item.Id }, null) </li>
+        }
+    </ul>
+}
+else
+{
+    <h2>Нет доступных хранилищ</h2>
 }
 

@@ -251,7 +251,7 @@
     <Content Include="Views\VaultAdmin\Details.cshtml" />
     <Content Include="Views\VaultAdmin\UsersAccess.cshtml" />
     <Content Include="Views\VaultAdmin\OpenHours.cshtml" />
-    <Content Include="Views\Vault\Details.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

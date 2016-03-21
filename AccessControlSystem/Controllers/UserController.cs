@@ -12,24 +12,16 @@ using Microsoft.AspNet.Identity;
 
 namespace AccessControlSystem.Controllers
 {
+    [Authorize(Users = "admin")]
     public class UserController : Controller
     {
         private ISession _session;
-        //private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public ISession DbSession
         {
             get { return _session ?? (_session = HttpContext.GetOwinContext().Get<ISession>()); }
         }
-
-        //public ApplicationSignInManager SignInManager
-        //{
-        //    get
-        //    {
-        //        return _signInManager ?? (_signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>());
-        //    }
-        //}
 
         public ApplicationUserManager UserManager
         {

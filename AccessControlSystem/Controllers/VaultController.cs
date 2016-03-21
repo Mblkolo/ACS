@@ -13,7 +13,7 @@ using NHibernate.AspNet.Identity;
 
 namespace AccessControlSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Users="admin")]
     public class VaultController : Controller
     {
         private ISession _session;
@@ -25,7 +25,6 @@ namespace AccessControlSystem.Controllers
 
 
         // GET: Vault
-        //[Authorize(Users="admin")]
         public ActionResult Index()
         {
             var allVault = DbSession.Query<Vault>().Select(x => new VaultViewModel
@@ -36,41 +35,6 @@ namespace AccessControlSystem.Controllers
             }).ToArray();
 
             return View(allVault);
-        }
-
-        // GET: Vault/Details/5
-        public ActionResult Details(int id)
-        {
-            var vault = DbSession.Get<Vault>(id);
-            if (vault == null)
-                return HttpNotFound();
-
-            string currentUserId = User.Identity.GetUserId();
-            var user = DbSession.Get<IdentityUser>(currentUserId);
-            bool success = user != null && vault.Users.Any(x => x.User == user);
-
-            using (var transaction = DbSession.BeginTransaction())
-            {
-                //По идее пользователь не должен быть равен null, ибо есть проверка на авторизацю
-                var info = user == null ? "Неизвестный пользователь" : String.Format("{0} ( {1} )", user.UserName, user.Email);
-
-                var logMessage = new VaultAccess
-                {
-                    AccessTime = DateTime.Now,
-                    IsSuccess = success,
-                    UserInfo = info,
-                    Vault = vault
-                };
-
-                DbSession.Save(logMessage);
-
-                transaction.Commit();
-            }
-
-            if (!success)
-                return HttpNotFound("За вами уже выехали");
-
-            return View();
         }
 
         public ActionResult Create()

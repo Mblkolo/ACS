@@ -72,20 +72,23 @@ namespace AccessControlSystem
                         var vaultAdminUser = new ApplicationUser{Email = "vault_admin@example.com", UserName = "vault_admin", EmailConfirmed = true};
                         var simpleUser = new ApplicationUser{Email = "user@example.com", UserName = "user", EmailConfirmed = true};
 
-                        var res = manager.Create(adminUser, "Ololo1,");
+                        var res = manager.Create(adminUser, "Pass1,");
                         if (!res.Succeeded)
                             throw new Exception(String.Join(System.Environment.NewLine, res.Errors));
 
-                        res = manager.Create(vaultAdminUser, "Ololo1,");
+                        res = manager.Create(vaultAdminUser, "Pass1,");
                         if (!res.Succeeded)
                             throw new Exception(String.Join(System.Environment.NewLine, res.Errors));
 
-                        res = manager.Create(simpleUser, "Ololo1,");
+                        res = manager.Create(simpleUser, "Pass1,");
                         if (!res.Succeeded)
                             throw new Exception(String.Join(System.Environment.NewLine, res.Errors));
 
-                        var vault = new Vault { Admin = vaultAdminUser, Name = "Важные данные" };
-                        session.SaveOrUpdate(vault);
+                        var vault = new Vault { Admin = vaultAdminUser, Name = "Важные данные", OpeningTime = 1, ClosingTime = 23 };
+                        session.Save(vault);
+
+                        session.Save(new VaultUsers { User = vaultAdminUser, Vault = vault });
+                        session.Save(new VaultUsers { User = simpleUser, Vault = vault });
 
                         tr.Commit();
                     }
